@@ -12,6 +12,7 @@ import com.tim.rickandmorty.repository.EpisodeRepository;
 import com.tim.rickandmorty.repository.LocationRepository;
 import com.tim.rickandmorty.response.CharacterResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,6 +42,7 @@ public class CharacterService {
         return characterRepository.save(characters);
     }
 
+    @Scheduled(cron = "0 15 * * * *") //every day at 15:00
     public void saveToDatabase(RestTemplate restTemplate) {
         PageCharacter pageCharacter = restTemplate.getForObject(CHARACTER_URL, PageCharacter.class);
 

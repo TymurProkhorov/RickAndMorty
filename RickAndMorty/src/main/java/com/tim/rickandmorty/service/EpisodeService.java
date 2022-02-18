@@ -7,6 +7,7 @@ import com.tim.rickandmorty.entity.Episode;
 import com.tim.rickandmorty.repository.EpisodeRepository;
 import com.tim.rickandmorty.response.EpisodeResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,6 +48,7 @@ public class EpisodeService {
         episodeRepository.saveAll(episodes);
     }
 
+    @Scheduled(cron = "0 15 * * * *") //every day at 15:00
     public void saveToDatabase(RestTemplate restTemplate) {
         PageEpisode pageEpisode = restTemplate.getForObject(EPISODE_URL, PageEpisode.class);
 

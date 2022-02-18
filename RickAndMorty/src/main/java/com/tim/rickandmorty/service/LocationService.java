@@ -9,6 +9,7 @@ import com.tim.rickandmorty.response.CharacterResponse;
 import com.tim.rickandmorty.response.LocationResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +44,7 @@ public class LocationService {
         locationRepository.saveAll(locations);
     }
 
+    @Scheduled(cron = "0 15 * * * *") //every day at 15:00
     public void saveToDatabase(RestTemplate restTemplate) {
         PageLocation pageLocation = restTemplate.getForObject(LOCATION_URL, PageLocation.class);
         List<PageLocation> pageLocationList = new ArrayList<>();
